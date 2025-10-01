@@ -11,8 +11,8 @@ Before initiating the deployment process, ensure the following tools and service
 * **Docker:** Essential for building and managing container images.
 * **DigitalOcean Kubernetes Service (DOKS) Cluster:** A pre-provisioned and running Kubernetes cluster on DigitalOcean.
 * **DigitalOcean Container Registry (DOCR):** A private container registry service to securely store your built Docker image.
-* **`doctl`:** The official DigitalOcean command-line interface for interaction with DigitalOcean resources.
-* **`kubectl`:** The standard Kubernetes command-line tool for managing cluster resources.
+* **doctl:** The official DigitalOcean command-line interface for interaction with DigitalOcean resources.
+* **kubectl:** The standard Kubernetes command-line tool for managing cluster resources.
 
 ---
 
@@ -107,4 +107,15 @@ To enable automatic scaling of the deployment based on resource utilization (e.g
 ```bash
 kubectl apply -f hpa.yaml
 ```
+-----
+### Useful Documents:
 
+[+] https://docs.docker.com/engine/install/
+
+[+] https://docs.digitalocean.com/products/kubernetes/how-to/create-clusters/
+
+[+] https://docs.digitalocean.com/products/container-registry/getting-started/quickstart/
+
+[+] https://docs.digitalocean.com/reference/doctl/how-to/install/
+
+[+] https://kubernetes.io/docs/tasks/tools/
