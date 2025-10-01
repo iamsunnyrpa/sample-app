@@ -1,0 +1,29 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flask-app-hpa
+spec:
+  # Reference the Deployment we want to scale
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: flask-app-deployment
+    
+  # Minimum number of replicas (matches your current deployment 'replicas: 3')
+  minReplicas: 3
+  
+  # Maximum number of replicas the deployment can scale to
+  maxReplicas: 10
+  
+  # Define the metric used for scaling
+  metrics:
+  - type: Resource
+    resource:
+      # Use the CPU resource metric
+      name: cpu
+      target:
+        # Scale based on the average utilization percentage of the requested CPU
+        type: Utilization
+        # Target 50% CPU utilization (if requests are 200m, this means scale up 
+        # when average usage hits 100m or more).
+        averageUtilization: 50

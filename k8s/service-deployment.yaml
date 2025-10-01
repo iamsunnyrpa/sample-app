@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment
+  labels:
+    app: flask-app
+spec:
+  replicas: 3 # Run 3 instances of your application
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      # If you created a secret, uncomment and use the secret name here
+      # imagePullSecrets:
+      # - name: docr-secret
+      containers:
+      - name: flask-container
+        # Update this image path with your actual DOCR path and tag
+        image: registry.digitalocean.com/sunny-web-app/webapp:v1
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            # Each pod is requesting 200 millicores (0.2 CPU core)
+            # HPA will scale when average usage exceeds 50% of this request (100m)
+            cpu: "200m"
+        env: # Optional: Example of setting an environment variable
+        - name: NAME
+          value: "DigitalOcean User"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+spec:
+  selector:
+    app: flask-app
+  type: LoadBalancer # Use LoadBalancer to expose the service externally on DigitalOcean
+  ports:
+    - protocol: TCP
+      port: 80 # External port
+      targetPort: 5000 # Container port (matches EXPOSE in Dockerfile)
